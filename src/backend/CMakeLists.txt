@@ -15,6 +15,10 @@ add_library(
     backend.cpp
     backend.hpp
     enums.hpp
+    output/output.cpp
+    output/output.hpp
+    output/model.cpp
+    output/model.hpp
     ${backend_SRCS}
 )
 

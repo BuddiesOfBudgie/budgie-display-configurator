@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
+import org.buddiesofbudgie.DisplayConfig
 
 Kirigami.ApplicationWindow {
     id: root
@@ -12,9 +13,10 @@ Kirigami.ApplicationWindow {
     title: i18nc("@title:window", "Displays")
 
     pageStack.initialPage: Kirigami.Page {
-        Controls.Label {
-            anchors.centerIn: parent
-            text: Backend.daemonConnectionState
+        ColumnLayout {
+            id: rootLayout
+
+            Outputs {}
         }
     }
 }
