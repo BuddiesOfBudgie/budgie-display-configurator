@@ -24,3 +24,11 @@ tasks:
     desc: "Run ninja install"
     cmds:
       - sudo ninja install -C build
+  qdbus-gen:
+    desc: "Generate qdbus adaptors"
+    dir: src/backend/dbus
+    cmds:
+      - /usr/lib64/qt6/bin/qdbusxml2cpp -a generated/DisplayAdaptorGen schemas/DisplaySchema.Displays.xml
+      - /usr/lib64/qt6/bin/qdbusxml2cpp -a generated/BatchSystemAdaptorGen schemas/DisplaySchema.BatchSystem.xml
+      - /usr/lib64/qt6/bin/qdbusxml2cpp -a generated/OutputAdaptorGen schemas/DisplaySchema.Output.xml
+      - /usr/lib64/qt6/bin/qdbusxml2cpp -a generated/OutputModeAdaptorGen schemas/DisplaySchema.OutputMode.xml

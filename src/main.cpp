@@ -7,10 +7,24 @@
 #include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QLoggingCategory>
+
 #include <QQuickStyle>
 #include "backend/backend.hpp"
 
 int main(int argc, char *argv[]) {
+    qSetMessagePattern(QStringLiteral("[%{type}] %{if-debug}[%{file}:%{line} %{function}]%{endif}%{message}"));
+
+    // Hardcoded (can be overridden using QT_LOGGING_RULES) so we can have a bunch of logging
+    // But then filter out noise from QML / scenegraph
+    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg, true);
+    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtInfoMsg, true);
+    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtWarningMsg, true);
+    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtCriticalMsg, true);
+    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtFatalMsg, true);
+    QLoggingCategory::defaultCategory()->setFilterRules(QStringLiteral("*.debug=true"));
+    QLoggingCategory::defaultCategory()->setFilterRules(QStringLiteral("qt.scenegraph.general=false"));
+    
     KIconTheme::initTheme();
     QGuiApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("budgie-display-configurator");

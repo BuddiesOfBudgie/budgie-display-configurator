@@ -53,6 +53,8 @@ ecm_target_qml_sources(org.buddiesofbudgie.DisplayConfig
 
 target_link_libraries(org.buddiesofbudgie.DisplayConfig
     PRIVATE
+    Qt6::Core
+    Qt6::DBus
     Qt6::Quick
     Qt6::Qml
     Qt6::Gui

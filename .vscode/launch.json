@@ -12,7 +12,7 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "env": {
-                // "QT_LOGGING_RULES": "*.debug=true"
+                "QDBUS_DEBUG": "1"
             },
             "preLaunchTask": "build",
             "reverseDebugging": true

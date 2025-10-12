@@ -14,7 +14,7 @@ Kirigami.ApplicationWindow {
     pageStack.initialPage: Kirigami.Page {
         Controls.Label {
             anchors.centerIn: parent
-            text: Backend.test
+            text: Backend.daemonConnectionState
         }
     }
 }

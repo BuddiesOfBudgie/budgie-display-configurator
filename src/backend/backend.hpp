@@ -1,20 +1,24 @@
 #pragma once
 
 #include <QObject>
+#include <QDBusConnection>
+#include "enums.hpp"
 
 namespace bd {
 
   class Backend : public QObject {
       Q_OBJECT
-      Q_PROPERTY(QString test READ test WRITE setTest NOTIFY testChanged)
+      Q_PROPERTY(DaemonConnectionState daemonConnectionState READ daemonConnectionState NOTIFY daemonConnectionStateChanged)
 
     public:
       explicit Backend(QObject* parent = nullptr);
-      QString       test() const;
-      void          setTest(const QString& test);
-      Q_SIGNAL void testChanged();
+      void connect();
+      DaemonConnectionState daemonConnectionState() const;
+      Q_SIGNAL void daemonConnectionStateChanged();
+      Q_SLOT void setDaemonConnectionState(DaemonConnectionState daemonConnectionState);
 
     private:
-      QString m_test = QStringLiteral("Hello, World!");
+      DaemonConnectionState m_daemonConnectionState = DaemonConnectionState::Disconnected;
+      QDBusConnection m_connection = QDBusConnection::sessionBus();
   };
 }
