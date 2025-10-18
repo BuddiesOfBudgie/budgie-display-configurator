@@ -1,12 +1,12 @@
 #include "backend.hpp"
+
 #include <QDBusConnection>
 #include <QDBusInterface>
-
 #include <QString>
 
 #include "DisplaysInterface.h"
-#include "output/model.hpp"
 #include "layout/LayoutManager.hpp"
+#include "output/model.hpp"
 
 namespace bd {
 
@@ -21,7 +21,7 @@ namespace bd {
     }
 
     qInfo() << "Connected to session bus";
-    m_outputs = new bd::OutputModel(this);
+    m_outputs       = new bd::OutputModel(this);
     m_layoutManager = new bd::LayoutManager(this);
     connect();
   }
@@ -29,11 +29,7 @@ namespace bd {
   void Backend::connect() {
     qInfo() << "Connecting to displays interface";
     auto iface = new org::buddiesofbudgie::BudgieDaemon::Displays(
-        QStringLiteral("org.buddiesofbudgie.BudgieDaemon"),
-        QStringLiteral("/org/buddiesofbudgie/BudgieDaemon/Displays"),
-        *m_connection.data(),
-        this
-    );
+        QStringLiteral("org.buddiesofbudgie.BudgieDaemon"), QStringLiteral("/org/buddiesofbudgie/BudgieDaemon/Displays"), *m_connection.data(), this);
     if (!iface->isValid()) {
       qInfo() << "Failed to get displays interface";
       setDaemonConnectionState(DaemonConnectionState::Failed);
@@ -59,7 +55,7 @@ namespace bd {
     outputsReply.waitForFinished();
     if (!outputsReply.isError()) {
       const auto ids = outputsReply.value();
-      for (const auto &id : ids) {
+      for (const auto& id : ids) {
         auto output = new bd::Output(this, id);
         output->init(m_connection);
         auto sharedOutput = QSharedPointer<Output>(output);
@@ -70,7 +66,6 @@ namespace bd {
       qWarning() << "GetAvailableOutputs error:" << outputsReply.error();
     }
   }
-
 
   DaemonConnectionState Backend::daemonConnectionState() const {
     return m_daemonConnectionState;

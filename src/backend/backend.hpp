@@ -1,10 +1,11 @@
 #pragma once
 
-#include <QObject>
 #include <QDBusConnection>
+#include <QObject>
+
 #include "enums.hpp"
-#include "output/model.hpp"
 #include "layout/LayoutManager.hpp"
+#include "output/model.hpp"
 
 namespace bd {
 
@@ -16,19 +17,19 @@ namespace bd {
 
     public:
       explicit Backend(QObject* parent = nullptr);
-      void connect();
-      bd::OutputModel* outputs() const;
-      bd::LayoutManager* layoutManager() const;
+      void                  connect();
+      bd::OutputModel*      outputs() const;
+      bd::LayoutManager*    layoutManager() const;
       DaemonConnectionState daemonConnectionState() const;
-      Q_SIGNAL void daemonConnectionStateChanged();
-      Q_SLOT void setDaemonConnectionState(DaemonConnectionState daemonConnectionState);
-      Q_SIGNAL void outputsChanged();
-      Q_SIGNAL void layoutManagerChanged();
+      Q_SIGNAL void         daemonConnectionStateChanged();
+      Q_SLOT void           setDaemonConnectionState(DaemonConnectionState daemonConnectionState);
+      Q_SIGNAL void         outputsChanged();
+      Q_SIGNAL void         layoutManagerChanged();
 
     private:
-      DaemonConnectionState m_daemonConnectionState = DaemonConnectionState::Disconnected;
-      QSharedPointer<QDBusConnection> m_connection = QSharedPointer<QDBusConnection>(new QDBusConnection(QDBusConnection::sessionBus()));
-      bd::OutputModel* m_outputs;
-      bd::LayoutManager* m_layoutManager;
+      DaemonConnectionState           m_daemonConnectionState = DaemonConnectionState::Disconnected;
+      QSharedPointer<QDBusConnection> m_connection            = QSharedPointer<QDBusConnection>(new QDBusConnection(QDBusConnection::sessionBus()));
+      bd::OutputModel*                m_outputs;
+      bd::LayoutManager*              m_layoutManager;
   };
 }
