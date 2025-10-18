@@ -14,6 +14,10 @@ add_library(
     backend STATIC
     backend.cpp
     backend.hpp
+    layout/LayoutManager.cpp
+    layout/LayoutManager.hpp
+    layout/LayoutManagerModel.cpp
+    layout/LayoutManagerModel.hpp
     enums.hpp
     output/output.cpp
     output/output.hpp

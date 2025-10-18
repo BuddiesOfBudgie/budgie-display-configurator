@@ -25,15 +25,17 @@ int main(int argc, char *argv[]) {
     QLoggingCategory::defaultCategory()->setFilterRules(QStringLiteral("*.debug=true"));
     QLoggingCategory::defaultCategory()->setFilterRules(QStringLiteral("qt.scenegraph.general=false"));
     
-    KIconTheme::initTheme();
-    QGuiApplication app(argc, argv);
+    // KIconTheme::initTheme();
     KLocalizedString::setApplicationDomain("budgie-display-configurator");
     
     QApplication::setOrganizationName(QStringLiteral("Buddies of Budgie"));
     QApplication::setOrganizationDomain(QStringLiteral("buddiesofbudgie.org"));
 
-    QGuiApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop")));
     QGuiApplication::setDesktopFileName(QStringLiteral("org.buddiesofbudgie.DisplayConfig"));
+
+    QApplication app(argc, argv);
+    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-display")));
+
 
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
@@ -80,7 +82,7 @@ int main(int argc, char *argv[]) {
 
     // #endregion
 
-    KColorSchemeManager::instance();
+    // KColorSchemeManager::instance();
 
     QQmlApplicationEngine engine;
     auto ctx = new KLocalizedQmlContext(&engine);

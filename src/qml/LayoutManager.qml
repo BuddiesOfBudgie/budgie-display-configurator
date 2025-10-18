@@ -1,0 +1,76 @@
+import QtQuick
+import QtQuick.Layouts
+import org.kde.kirigami as Kirigami
+
+Rectangle {
+    Kirigami.Theme.colorSet: Kirigami.Theme.Window
+    color: Kirigami.Theme.alternateBackgroundColor
+    width: (Backend.layoutManager.globalRect.width * 0.10) + (Kirigami.Units.largeSpacing * 2)
+    height: (Backend.layoutManager.globalRect.height * 0.10) + (Kirigami.Units.largeSpacing * 2)
+    radius: Kirigami.Units.cornerRadius
+
+    Component {
+        id: outputDelegate
+
+        Item {
+            required property string serial
+            required property string name
+            required property rect geometry
+
+            height: geometry.height * 0.10
+            width: geometry.width * 0.10
+
+            Rectangle {
+                id: serial
+                Kirigami.Theme.colorSet: Kirigami.Theme.Selection
+                color: Kirigami.Theme.disabledTextColor
+                radius: Kirigami.Units.cornerRadius
+
+                height: geometry.height * 0.10
+                width: geometry.width * 0.10
+                x: geometry.x * 0.10
+                y: geometry.y * 0.10
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    Kirigami.Heading {
+                        Layout.fillWidth: true
+                        horizontalAlignment: Text.AlignHCenter
+
+                        level: 1
+
+                        Kirigami.Theme.inherit: true
+                        color: Kirigami.Theme.textColor
+
+                        text: name + " (" + serial + ")"
+                    }
+                    Kirigami.Heading {
+                        Layout.fillWidth: true
+                        horizontalAlignment: Text.AlignHCenter
+                        text: geometry.width + "x" + geometry.height
+                    }
+                }
+            }
+        }
+    }
+
+    GridView {
+        id: grid
+        cellWidth: 100
+        cellHeight: 100
+        anchors.fill: parent
+        anchors.margins: Kirigami.Units.largeSpacing
+        width: parent.width
+        height: parent.height
+
+        model: Backend.layoutManager.model
+        delegate: outputDelegate
+
+        highlight: Rectangle {
+            Kirigami.Theme.colorSet: Kirigami.Theme.Selection
+            Kirigami.Theme.inherit: false
+            color: Kirigami.Theme.highlightColor
+            radius: Kirigami.Units.cornerRadius
+        }
+    }
+}

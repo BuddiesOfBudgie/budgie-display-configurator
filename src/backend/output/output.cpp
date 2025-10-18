@@ -28,6 +28,8 @@ namespace bd {
             return;
         }
 
+        qInfo() << "Output interface valid for" << m_serial << "at" << path;
+
         m_output = QSharedPointer<org::buddiesofbudgie::BudgieDaemon::Output>(output);
 
         connect(m_output.data(), &org::buddiesofbudgie::BudgieDaemon::Output::PropertyChanged, this, &Output::onPropertyChanged);

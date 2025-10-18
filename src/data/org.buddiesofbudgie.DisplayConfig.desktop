@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Displays
+Name=Displays (New)
 Exec=org.buddiesofbudgie.DisplayConfig
-Icon=preferences-desktop
+Icon=preferences-desktop-display
 Type=Application
 Terminal=false
 Categories=Utility

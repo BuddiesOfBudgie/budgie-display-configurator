@@ -10,13 +10,14 @@ Kirigami.ApplicationWindow {
     width: 400
     height: 300
 
+    controlsVisible: false
     title: i18nc("@title:window", "Displays")
 
     pageStack.initialPage: Kirigami.Page {
         ColumnLayout {
             id: rootLayout
 
-            Outputs {}
+            LayoutManager {}
         }
     }
 }

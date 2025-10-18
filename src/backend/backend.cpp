@@ -6,6 +6,7 @@
 
 #include "DisplaysInterface.h"
 #include "output/model.hpp"
+#include "layout/LayoutManager.hpp"
 
 namespace bd {
 
@@ -21,6 +22,7 @@ namespace bd {
 
     qInfo() << "Connected to session bus";
     m_outputs = new bd::OutputModel(this);
+    m_layoutManager = new bd::LayoutManager(this);
     connect();
   }
 
@@ -40,6 +42,8 @@ namespace bd {
 
     qInfo() << "Connected to displays interface";
 
+    m_layoutManager->connect(iface);
+
     setDaemonConnectionState(DaemonConnectionState::Connected);
 
     auto reply = iface->GetPrimaryOutput();
@@ -58,7 +62,9 @@ namespace bd {
       for (const auto &id : ids) {
         auto output = new bd::Output(this, id);
         output->init(m_connection);
-        m_outputs->addOutput(QSharedPointer<Output>(output));
+        auto sharedOutput = QSharedPointer<Output>(output);
+        m_outputs->addOutput(sharedOutput);
+        m_layoutManager->addOutput(sharedOutput);
       }
     } else {
       qWarning() << "GetAvailableOutputs error:" << outputsReply.error();
@@ -72,6 +78,10 @@ namespace bd {
 
   bd::OutputModel* Backend::outputs() const {
     return m_outputs;
+  }
+
+  bd::LayoutManager* Backend::layoutManager() const {
+    return m_layoutManager;
   }
 
   void Backend::setDaemonConnectionState(DaemonConnectionState daemonConnectionState) {

@@ -49,7 +49,7 @@ target_sources(org.buddiesofbudgie.DisplayConfig
 ecm_target_qml_sources(org.buddiesofbudgie.DisplayConfig
     SOURCES
     qml/Main.qml
-    qml/Outputs.qml
+    qml/LayoutManager.qml
 )
 
 target_link_libraries(org.buddiesofbudgie.DisplayConfig
@@ -69,3 +69,4 @@ target_link_libraries(org.buddiesofbudgie.DisplayConfig
     backend
 )
 
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/org.buddiesofbudgie.DisplayConfig.desktop DESTINATION ${KDE_INSTALL_APPDIR})
