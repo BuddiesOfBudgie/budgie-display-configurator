@@ -5,95 +5,79 @@
 #include <KLocalizedString>
 #include <QApplication>
 #include <QIcon>
+#include <QLoggingCategory>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QLoggingCategory>
-
 #include <QQuickStyle>
+
 #include "backend/backend.hpp"
 
-int main(int argc, char *argv[]) {
-    qSetMessagePattern(QStringLiteral("[%{type}] %{if-debug}[%{file}:%{line} %{function}]%{endif}%{message}"));
+int main(int argc, char* argv[]) {
+  qSetMessagePattern(QStringLiteral("[%{type}] %{if-debug}[%{file}:%{line} %{function}]%{endif}%{message}"));
 
-    // Hardcoded (can be overridden using QT_LOGGING_RULES) so we can have a bunch of logging
-    // But then filter out noise from QML / scenegraph
-    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg, true);
-    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtInfoMsg, true);
-    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtWarningMsg, true);
-    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtCriticalMsg, true);
-    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtFatalMsg, true);
-    QLoggingCategory::defaultCategory()->setFilterRules(QStringLiteral("*.debug=true"));
-    QLoggingCategory::defaultCategory()->setFilterRules(QStringLiteral("qt.scenegraph.general=false"));
-    
-    // KIconTheme::initTheme();
-    KLocalizedString::setApplicationDomain("budgie-display-configurator");
-    
-    QApplication::setOrganizationName(QStringLiteral("Buddies of Budgie"));
-    QApplication::setOrganizationDomain(QStringLiteral("buddiesofbudgie.org"));
+  // Hardcoded (can be overridden using QT_LOGGING_RULES) so we can have a bunch of logging
+  // But then filter out noise from QML / scenegraph
+  QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg, true);
+  QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtInfoMsg, true);
+  QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtWarningMsg, true);
+  QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtCriticalMsg, true);
+  QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtFatalMsg, true);
+  QLoggingCategory::defaultCategory()->setFilterRules(QStringLiteral("*.debug=true"));
+  QLoggingCategory::defaultCategory()->setFilterRules(QStringLiteral("qt.scenegraph.general=false"));
 
-    QGuiApplication::setDesktopFileName(QStringLiteral("org.buddiesofbudgie.DisplayConfig"));
+  // KIconTheme::initTheme();
+  KLocalizedString::setApplicationDomain("budgie-display-configurator");
 
-    QApplication app(argc, argv);
-    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-display")));
+  QApplication::setOrganizationName(QStringLiteral("Buddies of Budgie"));
+  QApplication::setOrganizationDomain(QStringLiteral("buddiesofbudgie.org"));
 
+  QGuiApplication::setDesktopFileName(QStringLiteral("org.buddiesofbudgie.DisplayConfig"));
 
-    if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
-        QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
-    }
+  QApplication app(argc, argv);
+  QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-display")));
 
-    // #region Set up about data
+  if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) { QQuickStyle::setStyle(QStringLiteral("org.kde.desktop")); }
 
-    // Do explicit calls instead of constructing with all args
-    // Makes it clearer what arg maps to what param
-    KAboutData aboutData;
-    aboutData.setComponentName(QStringLiteral("budgie-display-configurator"));
-    aboutData.setVersion("0.1.0");
-    aboutData.setShortDescription(i18n("Display configurator for Budgie Desktop"));
-    aboutData.setLicense(KAboutLicense::MPL_V2);
-    aboutData.setCopyrightStatement(QStringLiteral("(c) 2025 Buddies of Budgie"));
+  // #region Set up about data
 
-    aboutData.setHomepage(QStringLiteral("https://buddiesofbudgie.org"));
-    aboutData.setBugAddress("https://forge.moderndesktop.dev/BuddiesOfBudgie/budgie-display-configurator");
+  // Do explicit calls instead of constructing with all args
+  // Makes it clearer what arg maps to what param
+  KAboutData aboutData;
+  aboutData.setComponentName(QStringLiteral("budgie-display-configurator"));
+  aboutData.setVersion("0.1.0");
+  aboutData.setShortDescription(i18n("Display configurator for Budgie Desktop"));
+  aboutData.setLicense(KAboutLicense::MPL_V2);
+  aboutData.setCopyrightStatement(QStringLiteral("(c) 2025 Buddies of Budgie"));
 
-    aboutData.addAuthor(
-        QStringLiteral("Joshua Strobl"),
-         i18n("Maintainer"),
-          QStringLiteral("me@joshuastrobl.com"),
-          QStringLiteral("https://joshuastrobl.com")
-    );
+  aboutData.setHomepage(QStringLiteral("https://buddiesofbudgie.org"));
+  aboutData.setBugAddress("https://forge.moderndesktop.dev/BuddiesOfBudgie/budgie-display-configurator");
 
-    KAboutData::setApplicationData(aboutData);
+  aboutData.addAuthor(QStringLiteral("Joshua Strobl"), i18n("Maintainer"), QStringLiteral("me@joshuastrobl.com"), QStringLiteral("https://joshuastrobl.com"));
 
-    qmlRegisterSingletonType(
-        "org.buddiesofbudgie.DisplayConfig",
-        1, 0,
-        "About",
-        [](QQmlEngine* engine, QJSEngine *) -> QJSValue {
-            return engine->toScriptValue(KAboutData::applicationData());
-        }
-    );
+  KAboutData::setApplicationData(aboutData);
 
-    // #endregion
+  qmlRegisterSingletonType("org.buddiesofbudgie.DisplayConfig", 1, 0, "About", [](QQmlEngine* engine, QJSEngine*) -> QJSValue {
+    return engine->toScriptValue(KAboutData::applicationData());
+  });
 
-    // #region Set up backend
+  // #endregion
 
-    bd::Backend backend;
-    qmlRegisterSingletonInstance("org.buddiesofbudgie.DisplayConfig", 1, 0, "Backend", &backend);
+  // #region Set up backend
 
-    // #endregion
+  bd::Backend backend;
+  qmlRegisterSingletonInstance("org.buddiesofbudgie.DisplayConfig", 1, 0, "Backend", &backend);
 
-    // KColorSchemeManager::instance();
+  // #endregion
 
-    QQmlApplicationEngine engine;
-    auto ctx = new KLocalizedQmlContext(&engine);
-    engine.rootContext()->setContextObject(ctx);
-    QQmlEngine::setContextForObject(ctx, engine.rootContext());
-    engine.loadFromModule("org.buddiesofbudgie.DisplayConfig", "Main");
+  // KColorSchemeManager::instance();
 
-    if (engine.rootObjects().isEmpty()) {
-        return EXIT_FAILURE;
-    }
+  QQmlApplicationEngine engine;
+  auto                  ctx = new KLocalizedQmlContext(&engine);
+  engine.rootContext()->setContextObject(ctx);
+  QQmlEngine::setContextForObject(ctx, engine.rootContext());
+  engine.loadFromModule("org.buddiesofbudgie.DisplayConfig", "Main");
 
+  if (engine.rootObjects().isEmpty()) { return EXIT_FAILURE; }
 
-    return app.exec();
+  return app.exec();
 }

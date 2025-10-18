@@ -19,7 +19,7 @@ tasks:
     desc: "Run clang-format"
     dir: src
     cmds:
-      - clang-format -i **/*.cpp **/*.hpp
+      - clang-format -i main.cpp **/*.{cpp,hpp}
   install:
     desc: "Run ninja install"
     cmds:
