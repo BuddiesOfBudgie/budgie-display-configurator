@@ -9,7 +9,7 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 
-#include "backend/backend.hpp"
+#include "libdisplayconfig/backend.hpp"
 
 int main(int argc, char* argv[]) {
   qSetMessagePattern(QStringLiteral("[%{type}] %{if-debug}[%{file}:%{line} %{function}]%{endif}%{message}"));

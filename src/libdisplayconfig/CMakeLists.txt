@@ -11,14 +11,14 @@ qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.Output.xml OutputI
 qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.OutputMode.xml OutputModeInterface)
 
 add_library(
-    backend STATIC
+    libdisplayconfig STATIC
     backend.cpp
     backend.hpp
+    enums/connectionstate.hpp
     layout/LayoutManager.cpp
     layout/LayoutManager.hpp
     layout/LayoutManagerModel.cpp
     layout/LayoutManagerModel.hpp
-    enums.hpp
     output/output.cpp
     output/output.hpp
     output/model.cpp
@@ -26,6 +26,8 @@ add_library(
     ${backend_SRCS}
 )
 
-target_include_directories(backend PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+generate_export_header(libdisplayconfig BASE_NAME LibDisplayConfig)
 
-target_link_libraries(backend PRIVATE Qt::Core Qt::DBus)
+target_include_directories(libdisplayconfig PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_link_libraries(libdisplayconfig PRIVATE Qt::Core Qt::DBus Qt::Qml)

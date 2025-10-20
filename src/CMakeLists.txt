@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-add_subdirectory(backend)
+add_subdirectory(libdisplayconfig)
 
 ecm_find_qmlmodule(org.kde.kirigami REQUIRED)
 
@@ -38,5 +38,5 @@ target_link_libraries(org.buddiesofbudgie.DisplayConfig
     KF6::CoreAddons
     KF6::I18n
     KF6::I18nQml
-    backend
+    libdisplayconfig
 )

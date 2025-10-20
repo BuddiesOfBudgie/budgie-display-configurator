@@ -67,7 +67,7 @@ namespace bd {
     }
   }
 
-  DaemonConnectionState Backend::daemonConnectionState() const {
+  DaemonConnectionState::State Backend::daemonConnectionState() const {
     return m_daemonConnectionState;
   }
 
@@ -79,7 +79,7 @@ namespace bd {
     return m_layoutManager;
   }
 
-  void Backend::setDaemonConnectionState(DaemonConnectionState daemonConnectionState) {
+  void Backend::setDaemonConnectionState(DaemonConnectionState::State daemonConnectionState) {
     m_daemonConnectionState = daemonConnectionState;
     Q_EMIT daemonConnectionStateChanged();
   }
