@@ -17,16 +17,13 @@ namespace bd {
     public:
       LayoutManager(QObject* parent = nullptr);
 
-      void connect(org::buddiesofbudgie::BudgieDaemon::Displays * displaysInterface);
+      void connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface);
 
-      QRect globalRect() const;
+      QRect                   globalRect() const;
       bd::LayoutManagerModel* model() const;
 
-      int selectedIndex() const;
+      int     selectedIndex() const;
       QString selectedSerial() const;
-
-      Q_SLOT void setSelectedIndex(int index);
-      Q_SLOT void setSelectedSerial(const QString& serial);
 
       // Population helper
       void addOutput(QSharedPointer<Output> output);
@@ -39,15 +36,17 @@ namespace bd {
       // Emitted when the visual order changes due to drag-reorder
       void layoutOrderChanged(const QStringList& order);
 
+    public Q_SLOTS:
+      void setSelectedIndex(int index);
+      void setSelectedSerial(const QString& serial);
+
     private:
       void setGlobalRect();
 
-      LayoutManagerModel* m_model;
-      org::buddiesofbudgie::BudgieDaemon::Displays * m_displaysInterface;
-      QRect m_globalRect;
-      int m_selectedIndex = -1;
-      QString m_selectedSerial;
+      LayoutManagerModel*                           m_model;
+      org::buddiesofbudgie::BudgieDaemon::Displays* m_displaysInterface;
+      QRect                                         m_globalRect;
+      int                                           m_selectedIndex = -1;
+      QString                                       m_selectedSerial;
   };
 }
-
-

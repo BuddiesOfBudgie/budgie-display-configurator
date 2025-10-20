@@ -21,10 +21,14 @@ namespace bd {
       bd::OutputModel*             outputs() const;
       bd::LayoutManager*           layoutManager() const;
       DaemonConnectionState::State daemonConnectionState() const;
-      Q_SIGNAL void                daemonConnectionStateChanged();
-      Q_SLOT void                  setDaemonConnectionState(DaemonConnectionState::State daemonConnectionState);
-      Q_SIGNAL void                outputsChanged();
-      Q_SIGNAL void                layoutManagerChanged();
+
+    Q_SIGNALS:
+      void daemonConnectionStateChanged();
+      void outputsChanged();
+      void layoutManagerChanged();
+
+    public Q_SLOTS:
+      void setDaemonConnectionState(DaemonConnectionState::State daemonConnectionState);
 
     private:
       DaemonConnectionState::State    m_daemonConnectionState = DaemonConnectionState::Disconnected;
