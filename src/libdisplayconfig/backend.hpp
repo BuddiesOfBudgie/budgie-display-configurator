@@ -5,7 +5,7 @@
 
 #include "enums/connectionstate.hpp"
 #include "layout/LayoutManager.hpp"
-#include "output/model.hpp"
+#include "models/outputmodel.hpp"
 
 namespace bd {
 

@@ -2,12 +2,12 @@
 
 namespace bd {
   LayoutManager::LayoutManager(QObject* parent) : QObject(parent) {
-    m_model = new LayoutManagerModel(this);
+    m_model = new LayoutModel(this);
   }
 
-  void LayoutManager::connect(org::buddiesofbudgie::BudgieDaemon::Displays * displaysInterface) {
+  void LayoutManager::connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface) {
     m_displaysInterface = displaysInterface;
-    QObject::connect(m_model, &LayoutManagerModel::orderChanged, this, &LayoutManager::layoutOrderChanged);
+    QObject::connect(m_model, &LayoutModel::orderChanged, this, &LayoutManager::layoutOrderChanged);
     setGlobalRect();
   }
 
@@ -15,7 +15,7 @@ namespace bd {
     return m_globalRect;
   }
 
-  bd::LayoutManagerModel* LayoutManager::model() const {
+  bd::LayoutModel* LayoutManager::model() const {
     return m_model;
   }
 
@@ -38,30 +38,20 @@ namespace bd {
     auto rect = globalRectReply.value();
 
     m_globalRect = QRect(
-      rect[QStringLiteral("X")].toInt(),
-      rect[QStringLiteral("Y")].toInt(),
-       rect[QStringLiteral("Width")].toInt(),
-        rect[QStringLiteral("Height")].toInt()
-    );
+        rect[QStringLiteral("X")].toInt(), rect[QStringLiteral("Y")].toInt(), rect[QStringLiteral("Width")].toInt(), rect[QStringLiteral("Height")].toInt());
 
     Q_EMIT globalRectChanged();
   }
 
   void LayoutManager::setSelectedIndex(int index) {
-    if (m_selectedIndex == index) {
-      return;
-    }
+    if (m_selectedIndex == index) { return; }
     m_selectedIndex = index;
     Q_EMIT selectedIndexChanged();
   }
 
   void LayoutManager::setSelectedSerial(const QString& serial) {
-    if (m_selectedSerial == serial) {
-      return;
-    }
+    if (m_selectedSerial == serial) { return; }
     m_selectedSerial = serial;
     Q_EMIT selectedSerialChanged();
   }
 }
-
-

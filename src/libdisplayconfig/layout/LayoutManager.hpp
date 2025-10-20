@@ -4,12 +4,12 @@
 #include <QStringList>
 
 #include "DisplaysInterface.h"
-#include "LayoutManagerModel.hpp"
+#include "models/layoutmodel.hpp"
 
 namespace bd {
   class LayoutManager : public QObject {
       Q_OBJECT
-      Q_PROPERTY(bd::LayoutManagerModel* model READ model NOTIFY modelChanged)
+      Q_PROPERTY(bd::LayoutModel* model READ model NOTIFY modelChanged)
       Q_PROPERTY(int selectedIndex READ selectedIndex WRITE setSelectedIndex NOTIFY selectedIndexChanged)
       Q_PROPERTY(QString selectedSerial READ selectedSerial WRITE setSelectedSerial NOTIFY selectedSerialChanged)
       Q_PROPERTY(QRect globalRect READ globalRect NOTIFY globalRectChanged)
@@ -19,8 +19,8 @@ namespace bd {
 
       void connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface);
 
-      QRect                   globalRect() const;
-      bd::LayoutManagerModel* model() const;
+      QRect            globalRect() const;
+      bd::LayoutModel* model() const;
 
       int     selectedIndex() const;
       QString selectedSerial() const;
@@ -43,7 +43,7 @@ namespace bd {
     private:
       void setGlobalRect();
 
-      LayoutManagerModel*                           m_model;
+      LayoutModel*                                  m_model;
       org::buddiesofbudgie::BudgieDaemon::Displays* m_displaysInterface;
       QRect                                         m_globalRect;
       int                                           m_selectedIndex = -1;

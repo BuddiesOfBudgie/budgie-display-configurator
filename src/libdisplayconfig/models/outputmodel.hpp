@@ -2,7 +2,7 @@
 
 #include <QAbstractListModel>
 
-#include "output.hpp"
+#include "output/output.hpp"
 
 namespace bd {
   class OutputModel : public QAbstractListModel {

@@ -17,12 +17,12 @@ add_library(
     enums/connectionstate.hpp
     layout/LayoutManager.cpp
     layout/LayoutManager.hpp
-    layout/LayoutManagerModel.cpp
-    layout/LayoutManagerModel.hpp
+    models/layoutmodel.cpp
+    models/layoutmodel.hpp
+    models/outputmodel.cpp
+    models/outputmodel.hpp
     output/output.cpp
     output/output.hpp
-    output/model.cpp
-    output/model.hpp
     ${backend_SRCS}
 )
 

@@ -5,8 +5,6 @@
 #include <QString>
 
 #include "DisplaysInterface.h"
-#include "layout/LayoutManager.hpp"
-#include "output/model.hpp"
 
 namespace bd {
 
