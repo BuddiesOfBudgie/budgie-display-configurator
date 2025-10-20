@@ -5,6 +5,8 @@
 
 LayoutModel::LayoutModel(QObject* parent) : QAbstractListModel(parent) {}
 
+LayoutModel::~LayoutModel() = default;
+
 int LayoutModel::rowCount(const QModelIndex& parent) const {
   Q_UNUSED(parent);
   return m_items.size();

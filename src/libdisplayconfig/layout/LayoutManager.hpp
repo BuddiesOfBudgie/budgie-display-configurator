@@ -17,7 +17,8 @@ class LayoutManager : public QObject {
     Q_PROPERTY(QRect globalRect READ globalRect NOTIFY globalRectChanged)
 
   public:
-    LayoutManager(QObject* parent = nullptr);
+    explicit LayoutManager(QObject* parent = nullptr);
+    ~LayoutManager() override;
 
     void connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface);
 

@@ -25,6 +25,8 @@ Backend::Backend(QObject* parent) : QObject(parent) {
   connect();
 }
 
+Backend::~Backend() = default;
+
 void Backend::connect() {
   qInfo() << "Connecting to displays interface";
   auto iface = new org::buddiesofbudgie::BudgieDaemon::Displays(

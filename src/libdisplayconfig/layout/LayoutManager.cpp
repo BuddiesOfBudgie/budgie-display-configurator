@@ -7,6 +7,8 @@ LayoutManager::LayoutManager(QObject* parent) : QObject(parent) {
   m_model = new LayoutModel(this);
 }
 
+LayoutManager::~LayoutManager() = default;
+
 void LayoutManager::connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface) {
   m_displaysInterface = displaysInterface;
   QObject::connect(m_model, &LayoutModel::orderChanged, this, &LayoutManager::layoutOrderChanged);

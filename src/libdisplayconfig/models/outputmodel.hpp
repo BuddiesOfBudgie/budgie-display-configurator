@@ -12,6 +12,7 @@ class OutputModel : public QAbstractListModel {
 
   public:
     explicit OutputModel(QObject* parent = nullptr);
+    ~OutputModel() override;
 
     void                   addOutput(QSharedPointer<Output> output);
     int                    rowCount(const QModelIndex& parent = QModelIndex()) const override;

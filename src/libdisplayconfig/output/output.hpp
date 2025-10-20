@@ -15,7 +15,8 @@ class Output : public QObject {
     Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
 
   public:
-    Output(QObject* parent = nullptr, QString serial = QString());
+    explicit Output(QObject* parent = nullptr, QString serial = QString());
+    ~Output() override;
 
     QString serial() const;
     QString name() const;

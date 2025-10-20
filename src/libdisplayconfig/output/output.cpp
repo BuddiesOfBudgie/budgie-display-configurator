@@ -5,6 +5,8 @@
 
 Output::Output(QObject* parent, QString serial) : QObject(parent), m_serial(serial) {}
 
+Output::~Output() = default;
+
 void Output::onPropertyChanged(const QString& property, const QDBusVariant& value) {
   if (property == QStringLiteral("name")) {
     m_name = value.variant().toString();

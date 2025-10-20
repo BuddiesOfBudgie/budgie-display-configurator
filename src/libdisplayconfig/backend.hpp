@@ -18,6 +18,8 @@ class Backend : public QObject {
 
   public:
     explicit Backend(QObject* parent = nullptr);
+    ~Backend() override;
+
     void                         connect();
     OutputModel*                 outputs() const;
     LayoutManager*               layoutManager() const;

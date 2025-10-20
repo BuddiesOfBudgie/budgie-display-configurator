@@ -5,6 +5,8 @@
 
 OutputModel::OutputModel(QObject* parent) : QAbstractListModel(parent) {}
 
+OutputModel::~OutputModel() = default;
+
 void OutputModel::addOutput(QSharedPointer<Output> output) {
   beginInsertRows(QModelIndex(), m_outputs.size(), m_outputs.size());
   m_outputs.append(output);
