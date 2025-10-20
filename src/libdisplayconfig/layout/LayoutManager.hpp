@@ -6,47 +6,45 @@
 #include "DisplaysInterface.h"
 #include "models/layoutmodel.hpp"
 
-namespace bd {
-  class LayoutManager : public QObject {
-      Q_OBJECT
-      Q_PROPERTY(bd::LayoutModel* model READ model NOTIFY modelChanged)
-      Q_PROPERTY(int selectedIndex READ selectedIndex WRITE setSelectedIndex NOTIFY selectedIndexChanged)
-      Q_PROPERTY(QString selectedSerial READ selectedSerial WRITE setSelectedSerial NOTIFY selectedSerialChanged)
-      Q_PROPERTY(QRect globalRect READ globalRect NOTIFY globalRectChanged)
+class LayoutManager : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(LayoutModel* model READ model NOTIFY modelChanged)
+    Q_PROPERTY(int selectedIndex READ selectedIndex WRITE setSelectedIndex NOTIFY selectedIndexChanged)
+    Q_PROPERTY(QString selectedSerial READ selectedSerial WRITE setSelectedSerial NOTIFY selectedSerialChanged)
+    Q_PROPERTY(QRect globalRect READ globalRect NOTIFY globalRectChanged)
 
-    public:
-      LayoutManager(QObject* parent = nullptr);
+  public:
+    LayoutManager(QObject* parent = nullptr);
 
-      void connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface);
+    void connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface);
 
-      QRect            globalRect() const;
-      bd::LayoutModel* model() const;
+    QRect        globalRect() const;
+    LayoutModel* model() const;
 
-      int     selectedIndex() const;
-      QString selectedSerial() const;
+    int     selectedIndex() const;
+    QString selectedSerial() const;
 
-      // Population helper
-      void addOutput(QSharedPointer<Output> output);
+    // Population helper
+    void addOutput(QSharedPointer<Output> output);
 
-    Q_SIGNALS:
-      void globalRectChanged();
-      void modelChanged();
-      void selectedIndexChanged();
-      void selectedSerialChanged();
-      // Emitted when the visual order changes due to drag-reorder
-      void layoutOrderChanged(const QStringList& order);
+  Q_SIGNALS:
+    void globalRectChanged();
+    void modelChanged();
+    void selectedIndexChanged();
+    void selectedSerialChanged();
+    // Emitted when the visual order changes due to drag-reorder
+    void layoutOrderChanged(const QStringList& order);
 
-    public Q_SLOTS:
-      void setSelectedIndex(int index);
-      void setSelectedSerial(const QString& serial);
+  public Q_SLOTS:
+    void setSelectedIndex(int index);
+    void setSelectedSerial(const QString& serial);
 
-    private:
-      void setGlobalRect();
+  private:
+    void setGlobalRect();
 
-      LayoutModel*                                  m_model;
-      org::buddiesofbudgie::BudgieDaemon::Displays* m_displaysInterface;
-      QRect                                         m_globalRect;
-      int                                           m_selectedIndex = -1;
-      QString                                       m_selectedSerial;
-  };
-}
+    LayoutModel*                                  m_model;
+    org::buddiesofbudgie::BudgieDaemon::Displays* m_displaysInterface;
+    QRect                                         m_globalRect;
+    int                                           m_selectedIndex = -1;
+    QString                                       m_selectedSerial;
+};

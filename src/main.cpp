@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 
   // #region Set up backend
 
-  bd::Backend backend;
+  Backend backend;
   qmlRegisterSingletonInstance("org.buddiesofbudgie.DisplayConfig", 1, 0, "Backend", &backend);
 
   // #endregion

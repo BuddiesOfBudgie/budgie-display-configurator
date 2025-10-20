@@ -5,34 +5,32 @@
 
 #include "OutputInterface.h"
 
-namespace bd {
-  class Output : public QObject {
-      Q_OBJECT
-      Q_PROPERTY(QString serial READ serial NOTIFY serialChanged)
-      Q_PROPERTY(QString name READ name NOTIFY nameChanged)
-      Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
+class Output : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(QString serial READ serial NOTIFY serialChanged)
+    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
+    Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
 
-    public:
-      Output(QObject* parent = nullptr, QString serial = QString());
+  public:
+    Output(QObject* parent = nullptr, QString serial = QString());
 
-      QString serial() const;
-      QString name() const;
-      QRect   geometry() const;
-      void    init(QSharedPointer<QDBusConnection> connection);
+    QString serial() const;
+    QString name() const;
+    QRect   geometry() const;
+    void    init(QSharedPointer<QDBusConnection> connection);
 
-    Q_SIGNALS:
-      void serialChanged();
-      void nameChanged();
-      void geometryChanged();
+  Q_SIGNALS:
+    void serialChanged();
+    void nameChanged();
+    void geometryChanged();
 
-    public Q_SLOTS:
-      void onPropertyChanged(const QString& property, const QDBusVariant& value);
+  public Q_SLOTS:
+    void onPropertyChanged(const QString& property, const QDBusVariant& value);
 
-    private:
-      QString m_name;
-      QRect   m_geometry;
-      QString m_serial;
+  private:
+    QString m_name;
+    QRect   m_geometry;
+    QString m_serial;
 
-      QSharedPointer<org::buddiesofbudgie::BudgieDaemon::Output> m_output;
-  };
-}
+    QSharedPointer<org::buddiesofbudgie::BudgieDaemon::Output> m_output;
+};
