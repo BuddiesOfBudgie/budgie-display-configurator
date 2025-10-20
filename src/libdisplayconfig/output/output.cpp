@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: Budgie Desktop Developers
+// SPDX-License-Identifier: MPL-2.0
+
 #include "output.hpp"
 
 Output::Output(QObject* parent, QString serial) : QObject(parent), m_serial(serial) {}

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: Budgie Desktop Developers
+// SPDX-License-Identifier: MPL-2.0
+
 #include "layoutmodel.hpp"
 
 LayoutModel::LayoutModel(QObject* parent) : QAbstractListModel(parent) {}

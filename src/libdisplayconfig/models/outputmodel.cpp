@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: Budgie Desktop Developers
+// SPDX-License-Identifier: MPL-2.0
+
 #include "outputmodel.hpp"
 
 OutputModel::OutputModel(QObject* parent) : QAbstractListModel(parent) {}

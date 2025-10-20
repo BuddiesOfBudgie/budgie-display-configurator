@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: Budgie Desktop Developers
+// SPDX-License-Identifier: MPL-2.0
+
 #include "LayoutManager.hpp"
 
 LayoutManager::LayoutManager(QObject* parent) : QObject(parent) {
