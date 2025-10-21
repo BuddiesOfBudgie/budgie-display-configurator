@@ -14,8 +14,8 @@ add_library(
     backend.cpp
     backend.hpp
     enums/connectionstate.hpp
-    layout/LayoutManager.cpp
-    layout/LayoutManager.hpp
+    layout.cpp
+    layout.hpp
     models/layoutmodel.cpp
     models/layoutmodel.hpp
     models/outputmodel.cpp

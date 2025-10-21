@@ -9,7 +9,7 @@
 #include "DisplaysInterface.h"
 #include "models/layoutmodel.hpp"
 
-class LayoutManager : public QObject {
+class Layout : public QObject {
     Q_OBJECT
     Q_PROPERTY(LayoutModel* model READ model NOTIFY modelChanged)
     Q_PROPERTY(int selectedIndex READ selectedIndex WRITE setSelectedIndex NOTIFY selectedIndexChanged)
@@ -17,8 +17,8 @@ class LayoutManager : public QObject {
     Q_PROPERTY(QRect globalRect READ globalRect NOTIFY globalRectChanged)
 
   public:
-    explicit LayoutManager(QObject* parent = nullptr);
-    ~LayoutManager() override;
+    explicit Layout(QObject* parent = nullptr);
+    ~Layout() override;
 
     void connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface);
 

@@ -1,41 +1,41 @@
 // SPDX-FileCopyrightText: Budgie Desktop Developers
 // SPDX-License-Identifier: MPL-2.0
 
-#include "LayoutManager.hpp"
+#include "layout.hpp"
 
-LayoutManager::LayoutManager(QObject* parent) : QObject(parent) {
+Layout::Layout(QObject* parent) : QObject(parent) {
   m_model = new LayoutModel(this);
 }
 
-LayoutManager::~LayoutManager() = default;
+Layout::~Layout() = default;
 
-void LayoutManager::connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface) {
+void Layout::connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface) {
   m_displaysInterface = displaysInterface;
-  QObject::connect(m_model, &LayoutModel::orderChanged, this, &LayoutManager::layoutOrderChanged);
+  QObject::connect(m_model, &LayoutModel::orderChanged, this, &Layout::layoutOrderChanged);
   setGlobalRect();
 }
 
-QRect LayoutManager::globalRect() const {
+QRect Layout::globalRect() const {
   return m_globalRect;
 }
 
-LayoutModel* LayoutManager::model() const {
+LayoutModel* Layout::model() const {
   return m_model;
 }
 
-void LayoutManager::addOutput(QSharedPointer<Output> output) {
+void Layout::addOutput(QSharedPointer<Output> output) {
   m_model->addOutput(output);
 }
 
-int LayoutManager::selectedIndex() const {
+int Layout::selectedIndex() const {
   return m_selectedIndex;
 }
 
-QString LayoutManager::selectedSerial() const {
+QString Layout::selectedSerial() const {
   return m_selectedSerial;
 }
 
-void LayoutManager::setGlobalRect() {
+void Layout::setGlobalRect() {
   auto globalRectReply = m_displaysInterface->GetGlobalRect();
   if (globalRectReply.isError()) return;
 
@@ -47,13 +47,13 @@ void LayoutManager::setGlobalRect() {
   Q_EMIT globalRectChanged();
 }
 
-void LayoutManager::setSelectedIndex(int index) {
+void Layout::setSelectedIndex(int index) {
   if (m_selectedIndex == index) { return; }
   m_selectedIndex = index;
   Q_EMIT selectedIndexChanged();
 }
 
-void LayoutManager::setSelectedSerial(const QString& serial) {
+void Layout::setSelectedSerial(const QString& serial) {
   if (m_selectedSerial == serial) { return; }
   m_selectedSerial = serial;
   Q_EMIT selectedSerialChanged();

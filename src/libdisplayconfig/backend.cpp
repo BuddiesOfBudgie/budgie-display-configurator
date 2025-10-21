@@ -20,8 +20,8 @@ Backend::Backend(QObject* parent) : QObject(parent) {
   }
 
   qInfo() << "Connected to session bus";
-  m_outputs       = new OutputModel(this);
-  m_layoutManager = new LayoutManager(this);
+  m_outputs = new OutputModel(this);
+  m_layout  = new Layout(this);
   connect();
 }
 
@@ -39,7 +39,7 @@ void Backend::connect() {
 
   qInfo() << "Connected to displays interface";
 
-  m_layoutManager->connect(iface);
+  m_layout->connect(iface);
 
   setDaemonConnectionState(DaemonConnectionState::Connected);
 
@@ -61,7 +61,7 @@ void Backend::connect() {
       output->init(m_connection);
       auto sharedOutput = QSharedPointer<Output>(output);
       m_outputs->addOutput(sharedOutput);
-      m_layoutManager->addOutput(sharedOutput);
+      m_layout->addOutput(sharedOutput);
     }
   } else {
     qWarning() << "GetAvailableOutputs error:" << outputsReply.error();
@@ -76,8 +76,8 @@ OutputModel* Backend::outputs() const {
   return m_outputs;
 }
 
-LayoutManager* Backend::layoutManager() const {
-  return m_layoutManager;
+Layout* Backend::layout() const {
+  return m_layout;
 }
 
 void Backend::setDaemonConnectionState(DaemonConnectionState::State daemonConnectionState) {
