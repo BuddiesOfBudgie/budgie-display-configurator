@@ -7,11 +7,11 @@
 #include <QQmlEngine>
 
 /**
- * @class DaemonConnectionState
+ * @class ConnectionState
  *
  * This class defines the DaemonConnectionState enumeration.
  */
-class DaemonConnectionState : public QObject {
+class ConnectionState : public QObject {
     Q_OBJECT
     QML_ELEMENT
     QML_UNCREATABLE("")

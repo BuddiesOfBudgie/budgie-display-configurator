@@ -15,7 +15,7 @@ Backend::Backend(QObject* parent) : QObject(parent) {
 
   if (!QDBusConnection::sessionBus().isConnected()) {
     qCritical() << "Failed to connect to session bus";
-    setDaemonConnectionState(DaemonConnectionState::Failed);
+    setConnectionState(ConnectionState::Failed);
     return;
   }
 
@@ -33,7 +33,7 @@ void Backend::connect() {
       QStringLiteral("org.buddiesofbudgie.BudgieDaemon"), QStringLiteral("/org/buddiesofbudgie/BudgieDaemon/Displays"), *m_connection.data(), this);
   if (!iface->isValid()) {
     qInfo() << "Failed to get displays interface";
-    setDaemonConnectionState(DaemonConnectionState::Failed);
+    setConnectionState(ConnectionState::Failed);
     return;
   }
 
@@ -41,12 +41,12 @@ void Backend::connect() {
 
   m_layout->connect(iface);
 
-  setDaemonConnectionState(DaemonConnectionState::Connected);
+  setConnectionState(ConnectionState::Connected);
 
   auto reply = iface->GetPrimaryOutput();
   if (reply.isError()) {
     qInfo() << "Failed to get primary output";
-    setDaemonConnectionState(DaemonConnectionState::Failed);
+    setConnectionState(ConnectionState::Failed);
     return;
   }
 
@@ -68,8 +68,8 @@ void Backend::connect() {
   }
 }
 
-DaemonConnectionState::State Backend::daemonConnectionState() const {
-  return m_daemonConnectionState;
+ConnectionState::State Backend::connectionState() const {
+  return m_connectionState;
 }
 
 OutputModel* Backend::outputs() const {
@@ -80,7 +80,7 @@ Layout* Backend::layout() const {
   return m_layout;
 }
 
-void Backend::setDaemonConnectionState(DaemonConnectionState::State daemonConnectionState) {
-  m_daemonConnectionState = daemonConnectionState;
-  Q_EMIT daemonConnectionStateChanged();
+void Backend::setConnectionState(ConnectionState::State daemonConnectionState) {
+  m_connectionState = daemonConnectionState;
+  Q_EMIT connectionStateChanged();
 }
