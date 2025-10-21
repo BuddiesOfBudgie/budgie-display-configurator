@@ -1,6 +1,5 @@
 #include <KAboutData>
 #include <KColorSchemeManager>
-#include <KIconTheme>
 #include <KLocalizedQmlContext>
 #include <KLocalizedString>
 #include <QApplication>
