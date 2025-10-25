@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: Budgie Desktop Developers
+// SPDX-License-Identifier: MPL-2.0
+
 import QtQuick
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
@@ -5,8 +8,8 @@ import org.kde.kirigami as Kirigami
 Rectangle {
     Kirigami.Theme.colorSet: Kirigami.Theme.Window
     color: Kirigami.Theme.alternateBackgroundColor
-    width: (Backend.layoutManager.globalRect.width * 0.10) + (Kirigami.Units.largeSpacing * 2)
-    height: (Backend.layoutManager.globalRect.height * 0.10) + (Kirigami.Units.largeSpacing * 2)
+    width: (Backend.layout.globalRect.width * 0.10) + (Kirigami.Units.largeSpacing * 2)
+    height: (Backend.layout.globalRect.height * 0.10) + (Kirigami.Units.largeSpacing * 2)
     radius: Kirigami.Units.cornerRadius
 
     Component {
@@ -63,7 +66,7 @@ Rectangle {
         width: parent.width
         height: parent.height
 
-        model: Backend.layoutManager.model
+        model: Backend.layout.model
         delegate: outputDelegate
 
         highlight: Rectangle {

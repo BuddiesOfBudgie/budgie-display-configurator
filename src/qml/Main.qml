@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: Budgie Desktop Developers
+// SPDX-License-Identifier: MPL-2.0
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls

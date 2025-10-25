@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(backend_SRCS)
 
 qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.BatchSystem.xml BatchSystemInterface)
@@ -11,21 +10,23 @@ qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.Output.xml OutputI
 qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.OutputMode.xml OutputModeInterface)
 
 add_library(
-    backend STATIC
+    libdisplayconfig STATIC
     backend.cpp
     backend.hpp
-    layout/LayoutManager.cpp
-    layout/LayoutManager.hpp
-    layout/LayoutManagerModel.cpp
-    layout/LayoutManagerModel.hpp
-    enums.hpp
+    enums/connectionstate.hpp
+    layout.cpp
+    layout.hpp
+    models/layoutmodel.cpp
+    models/layoutmodel.hpp
+    models/outputmodel.cpp
+    models/outputmodel.hpp
     output/output.cpp
     output/output.hpp
-    output/model.cpp
-    output/model.hpp
     ${backend_SRCS}
 )
 
-target_include_directories(backend PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+generate_export_header(libdisplayconfig BASE_NAME LibDisplayConfig)
 
-target_link_libraries(backend PRIVATE Qt::Core Qt::DBus)
+target_include_directories(libdisplayconfig PRIVATE ${CMAKE_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/enums ${CMAKE_CURRENT_SOURCE_DIR}/models)
+
+target_link_libraries(libdisplayconfig PRIVATE Qt::Core Qt::DBus Qt::Qml)

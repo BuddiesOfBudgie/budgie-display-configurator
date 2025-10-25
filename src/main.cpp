@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: Budgie Desktop Developers
+// SPDX-License-Identifier: MPL-2.0
+
 #include <KAboutData>
 #include <KColorSchemeManager>
 #include <KLocalizedQmlContext>
@@ -9,7 +12,7 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 
-#include "backend/backend.hpp"
+#include "libdisplayconfig/backend.hpp"
 
 int main(int argc, char* argv[]) {
   qSetMessagePattern(QStringLiteral("[%{type}] %{if-debug}[%{file}:%{line} %{function}]%{endif}%{message}"));
@@ -63,7 +66,7 @@ int main(int argc, char* argv[]) {
 
   // #region Set up backend
 
-  bd::Backend backend;
+  Backend backend;
   qmlRegisterSingletonInstance("org.buddiesofbudgie.DisplayConfig", 1, 0, "Backend", &backend);
 
   // #endregion
