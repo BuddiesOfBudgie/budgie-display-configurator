@@ -6,7 +6,7 @@
 #include <QObject>
 #include <QStringList>
 
-#include "DisplaysInterface.h"
+#include "OutputsInterface.h"
 #include "models/layoutmodel.hpp"
 
 class Layout : public QObject {
@@ -20,7 +20,7 @@ class Layout : public QObject {
     explicit Layout(QObject* parent = nullptr);
     ~Layout() override;
 
-    void connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface);
+    void connect(org::buddiesofbudgie::Services::Outputs* displaysInterface);
 
     QRect        globalRect() const;
     LayoutModel* model() const;
@@ -46,9 +46,9 @@ class Layout : public QObject {
   private:
     void setGlobalRect();
 
-    LayoutModel*                                  m_model;
-    org::buddiesofbudgie::BudgieDaemon::Displays* m_displaysInterface;
-    QRect                                         m_globalRect;
-    int                                           m_selectedIndex = -1;
-    QString                                       m_selectedSerial;
+    LayoutModel*                             m_model;
+    org::buddiesofbudgie::Services::Outputs* m_displaysInterface;
+    QRect                                    m_globalRect;
+    int                                      m_selectedIndex = -1;
+    QString                                  m_selectedSerial;
 };

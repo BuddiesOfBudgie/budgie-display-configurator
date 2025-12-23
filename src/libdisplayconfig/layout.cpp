@@ -9,7 +9,7 @@ Layout::Layout(QObject* parent) : QObject(parent) {
 
 Layout::~Layout() = default;
 
-void Layout::connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface) {
+void Layout::connect(org::buddiesofbudgie::Services::Outputs* displaysInterface) {
   m_displaysInterface = displaysInterface;
   QObject::connect(m_model, &LayoutModel::orderChanged, this, &Layout::layoutOrderChanged);
   setGlobalRect();

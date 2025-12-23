@@ -4,8 +4,8 @@
 
 set(backend_SRCS)
 
-qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.BatchSystem.xml BatchSystemInterface)
-qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.Displays.xml DisplaysInterface)
+qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.Config.xml ConfigInterface)
+qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.Outputs.xml OutputsInterface)
 qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.Output.xml OutputInterface)
 qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.OutputMode.xml OutputModeInterface)
 

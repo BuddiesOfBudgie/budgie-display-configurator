@@ -7,7 +7,7 @@
 #include <QDBusInterface>
 #include <QString>
 
-#include "DisplaysInterface.h"
+#include "OutputsInterface.h"
 
 Backend::Backend(QObject* parent) : QObject(parent) {
   qInfo() << "Initializing backend";
@@ -29,8 +29,9 @@ Backend::~Backend() = default;
 
 void Backend::connect() {
   qInfo() << "Connecting to displays interface";
-  auto iface = new org::buddiesofbudgie::BudgieDaemon::Displays(
-      QStringLiteral("org.buddiesofbudgie.BudgieDaemon"), QStringLiteral("/org/buddiesofbudgie/BudgieDaemon/Displays"), *m_connection.data(), this);
+  auto iface = new org::buddiesofbudgie::Services::Outputs(
+      QStringLiteral("org.buddiesofbudgie.Services.Outputs"), QStringLiteral("/org/buddiesofbudgie/Services/Outputs"), *m_connection.data(), this);
+
   if (!iface->isValid()) {
     qInfo() << "Failed to get displays interface";
     setConnectionState(ConnectionState::Failed);
