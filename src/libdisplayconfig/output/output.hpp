@@ -36,5 +36,5 @@ class Output : public QObject {
     QRect   m_geometry;
     QString m_serial;
 
-    QSharedPointer<org::buddiesofbudgie::BudgieDaemon::Output> m_output;
+    QSharedPointer<org::buddiesofbudgie::Services::Output> m_output;
 };

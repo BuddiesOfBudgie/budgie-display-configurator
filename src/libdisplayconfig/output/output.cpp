@@ -18,8 +18,8 @@ void Output::onPropertyChanged(const QString& property, const QDBusVariant& valu
 }
 
 void Output::init(QSharedPointer<QDBusConnection> connection) {
-  const auto path   = QStringLiteral("/org/buddiesofbudgie/BudgieDaemon/Displays/Outputs/%1").arg(m_serial);
-  auto       output = new org::buddiesofbudgie::BudgieDaemon::Output(QStringLiteral("org.buddiesofbudgie.BudgieDaemon"), path, *connection.data(), this);
+  const auto path   = QStringLiteral("/org/buddiesofbudgie/Services/Outputs/%1").arg(m_serial);
+  auto       output = new org::buddiesofbudgie::Services::Output(QStringLiteral("org.buddiesofbudgie.Services"), path, *connection.data(), this);
 
   if (!output->isValid()) {
     qWarning() << "Output interface invalid for" << m_serial << "at" << path;
@@ -29,9 +29,9 @@ void Output::init(QSharedPointer<QDBusConnection> connection) {
 
   qInfo() << "Output interface valid for" << m_serial << "at" << path;
 
-  m_output = QSharedPointer<org::buddiesofbudgie::BudgieDaemon::Output>(output);
+  m_output = QSharedPointer<org::buddiesofbudgie::Services::Output>(output);
 
-  connect(m_output.data(), &org::buddiesofbudgie::BudgieDaemon::Output::PropertyChanged, this, &Output::onPropertyChanged);
+  connect(m_output.data(), &org::buddiesofbudgie::Services::Output::PropertyChanged, this, &Output::onPropertyChanged);
 }
 
 QRect Output::geometry() const {

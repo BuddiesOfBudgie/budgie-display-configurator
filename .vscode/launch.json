@@ -12,7 +12,8 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "env": {
-                "QDBUS_DEBUG": "1"
+                "QDBUS_DEBUG": "1",
+                "QT_QPA_PLATFORMTHEME": "qt6ct"
             },
             "preLaunchTask": "build",
             "reverseDebugging": true

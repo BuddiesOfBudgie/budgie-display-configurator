@@ -93,3 +93,6 @@ compile_commands.json
 
 # Building
 build/
+
+# Generated .qmlls.ini file for helping IDEs (and particularly qmllint) find correct paths
+**/.qmlls.ini

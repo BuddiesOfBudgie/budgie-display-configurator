@@ -7,7 +7,7 @@
 #include <QDBusInterface>
 #include <QString>
 
-#include "DisplaysInterface.h"
+#include "OutputsInterface.h"
 
 Backend::Backend(QObject* parent) : QObject(parent) {
   qInfo() << "Initializing backend";
@@ -28,43 +28,37 @@ Backend::Backend(QObject* parent) : QObject(parent) {
 Backend::~Backend() = default;
 
 void Backend::connect() {
-  qInfo() << "Connecting to displays interface";
-  auto iface = new org::buddiesofbudgie::BudgieDaemon::Displays(
-      QStringLiteral("org.buddiesofbudgie.BudgieDaemon"), QStringLiteral("/org/buddiesofbudgie/BudgieDaemon/Displays"), *m_connection.data(), this);
+  qInfo() << "Connecting to outputs interface";
+  auto iface = new org::buddiesofbudgie::Services::Outputs(
+      QStringLiteral("org.buddiesofbudgie.Services"), QStringLiteral("/org/buddiesofbudgie/Services/Outputs"), *m_connection.data(), this);
   if (!iface->isValid()) {
-    qInfo() << "Failed to get displays interface";
+    qInfo() << "Failed to get outputs interface";
     setConnectionState(ConnectionState::Failed);
     return;
   }
 
-  qInfo() << "Connected to displays interface";
+  qInfo() << "Connected to outputs interface";
 
   m_layout->connect(iface);
 
   setConnectionState(ConnectionState::Connected);
 
-  auto reply = iface->GetPrimaryOutput();
-  if (reply.isError()) {
+  QString primaryOutput = iface->primaryOutput();
+  if (primaryOutput.isEmpty()) {
     qInfo() << "Failed to get primary output";
     setConnectionState(ConnectionState::Failed);
     return;
   }
 
-  qInfo() << "Primary output: " << reply.value();
+  qInfo() << "Primary output: " << primaryOutput;
 
-  auto outputsReply = iface->GetAvailableOutputs();
-  outputsReply.waitForFinished();
-  if (!outputsReply.isError()) {
-    const auto ids = outputsReply.value();
-    for (const auto& id : ids) {
-      auto output = new Output(this, id);
-      output->init(m_connection);
-      auto sharedOutput = QSharedPointer<Output>(output);
-      m_outputs->addOutput(sharedOutput);
-      m_layout->addOutput(sharedOutput);
-    }
-  } else {
-    qWarning() << "GetAvailableOutputs error:" << outputsReply.error();
+  QStringList ids = iface->availableOutputs();
+  for (const auto& id : ids) {
+    auto output = new Output(this, id);
+    output->init(m_connection);
+    auto sharedOutput = QSharedPointer<Output>(output);
+    m_outputs->addOutput(sharedOutput);
+    m_layout->addOutput(sharedOutput);
   }
 }
 

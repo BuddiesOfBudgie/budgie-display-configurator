@@ -9,8 +9,8 @@ Layout::Layout(QObject* parent) : QObject(parent) {
 
 Layout::~Layout() = default;
 
-void Layout::connect(org::buddiesofbudgie::BudgieDaemon::Displays* displaysInterface) {
-  m_displaysInterface = displaysInterface;
+void Layout::connect(org::buddiesofbudgie::Services::Outputs* outputsInterface) {
+  m_outputsInterface = outputsInterface;
   QObject::connect(m_model, &LayoutModel::orderChanged, this, &Layout::layoutOrderChanged);
   setGlobalRect();
 }
@@ -36,10 +36,7 @@ QString Layout::selectedSerial() const {
 }
 
 void Layout::setGlobalRect() {
-  auto globalRectReply = m_displaysInterface->GetGlobalRect();
-  if (globalRectReply.isError()) return;
-
-  auto rect = globalRectReply.value();
+  auto rect = m_outputsInterface->globalRect();
 
   m_globalRect = QRect(
       rect[QStringLiteral("X")].toInt(), rect[QStringLiteral("Y")].toInt(), rect[QStringLiteral("Width")].toInt(), rect[QStringLiteral("Height")].toInt());

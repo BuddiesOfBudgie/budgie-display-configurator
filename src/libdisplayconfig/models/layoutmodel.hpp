@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <QObject>
 #include <QAbstractListModel>
 #include <QSharedPointer>
 #include <QStringList>

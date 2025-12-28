@@ -16,6 +16,7 @@ Rectangle {
         id: outputDelegate
 
         Item {
+            id: delegateItem
             required property string serial
             required property string name
             required property rect geometry
@@ -29,10 +30,10 @@ Rectangle {
                 color: Kirigami.Theme.disabledTextColor
                 radius: Kirigami.Units.cornerRadius
 
-                height: geometry.height * 0.10
-                width: geometry.width * 0.10
-                x: geometry.x * 0.10
-                y: geometry.y * 0.10
+                height: delegateItem.geometry.height * 0.10
+                width: delegateItem.geometry.width * 0.10
+                x: delegateItem.geometry.x * 0.10
+                y: delegateItem.geometry.y * 0.10
 
                 ColumnLayout {
                     anchors.fill: parent
@@ -50,7 +51,7 @@ Rectangle {
                     Kirigami.Heading {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignHCenter
-                        text: geometry.width + "x" + geometry.height
+                        text: delegateItem.geometry.width + "x" + delegateItem.geometry.height
                     }
                 }
             }

@@ -16,6 +16,9 @@ set(PROJECT_DEP_VERSION "6.1.80")
 set(QT_MIN_VERSION "6.8")
 set(KF6_MIN_VERSION "6.6.0")
 
+# Enable autogeneration of .qmlls.ini file for helping IDEs (and particularly qmllint) find correct paths
+set(QT_QML_GENERATE_QMLLS_INI ON)
+
 find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
