@@ -46,7 +46,7 @@ Rectangle {
                         Kirigami.Theme.inherit: true
                         color: Kirigami.Theme.textColor
 
-                        text: name + " (" + serial + ")"
+                        text: delegateItem.name + " (" + delegateItem.serial + ")"
                     }
                     Kirigami.Heading {
                         Layout.fillWidth: true
