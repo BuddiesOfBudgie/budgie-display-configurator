@@ -13,8 +13,13 @@
 #include <QQuickStyle>
 
 #include "libdisplayconfig/backend.hpp"
+#include "libdisplayconfig/types.hpp"
+#include <QDBusMetaType>
 
 int main(int argc, char* argv[]) {
+  // Register D-Bus meta types
+  qDBusRegisterMetaType<bd::Outputs::OutputModeInfo>();
+  qDBusRegisterMetaType<bd::Outputs::OutputModesMap>();
   qSetMessagePattern(QStringLiteral("[%{type}] %{if-debug}[%{file}:%{line} %{function}]%{endif}%{message}"));
 
   // Hardcoded (can be overridden using QT_LOGGING_RULES) so we can have a bunch of logging

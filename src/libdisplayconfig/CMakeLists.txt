@@ -4,6 +4,14 @@
 
 set(backend_SRCS)
 
+# Add types.hpp include to OutputInterface.h since it uses bd::Outputs::OutputModeInfo
+# This must be set before qt_add_dbus_interface is called
+set_source_files_properties(
+    dbus/schemas/DisplaySchema.Output.xml
+    PROPERTIES
+    INCLUDE "types.hpp"
+)
+
 qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.Config.xml ConfigInterface)
 qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.Displays.xml OutputsInterface)
 qt_add_dbus_interface(backend_SRCS dbus/schemas/DisplaySchema.Output.xml OutputInterface)
@@ -22,11 +30,13 @@ add_library(
     models/outputmodel.hpp
     output/output.cpp
     output/output.hpp
+    types.cpp
+    types.hpp
     ${backend_SRCS}
 )
 
 generate_export_header(libdisplayconfig BASE_NAME LibDisplayConfig)
 
-target_include_directories(libdisplayconfig PRIVATE ${CMAKE_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/enums ${CMAKE_CURRENT_SOURCE_DIR}/models)
+target_include_directories(libdisplayconfig PRIVATE ${CMAKE_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/enums ${CMAKE_CURRENT_SOURCE_DIR}/models ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(libdisplayconfig PRIVATE Qt::Core Qt::DBus Qt::Qml)

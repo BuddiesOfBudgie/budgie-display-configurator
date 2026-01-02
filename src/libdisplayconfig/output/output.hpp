@@ -7,12 +7,14 @@
 #include <QObject>
 
 #include "OutputInterface.h"
+#include "types.hpp"
 
 class Output : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString serial READ serial NOTIFY serialChanged)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
+    Q_PROPERTY(bd::Outputs::OutputModesMap modes READ modes NOTIFY modesChanged)
 
   public:
     explicit Output(QObject* parent = nullptr, QString serial = QString());
@@ -21,12 +23,14 @@ class Output : public QObject {
     QString serial() const;
     QString name() const;
     QRect   geometry() const;
+    bd::Outputs::OutputModesMap modes() const;
     void    init(QSharedPointer<QDBusConnection> connection);
 
   Q_SIGNALS:
     void serialChanged();
     void nameChanged();
     void geometryChanged();
+    void modesChanged();
 
   public Q_SLOTS:
     void onPropertyChanged(const QString& property, const QDBusVariant& value);
@@ -35,6 +39,7 @@ class Output : public QObject {
     QString m_name;
     QRect   m_geometry;
     QString m_serial;
+    bd::Outputs::OutputModesMap m_modes;
 
     QSharedPointer<org::buddiesofbudgie::Services::Output> m_output;
 };

@@ -11,9 +11,18 @@ void Output::onPropertyChanged(const QString& property, const QDBusVariant& valu
   if (property == QStringLiteral("name")) {
     m_name = value.variant().toString();
     Q_EMIT nameChanged();
-  } else if (property == QStringLiteral("geometry")) {
-    m_geometry = value.variant().toRect();
-    Q_EMIT geometryChanged();
+  } else if (property == QStringLiteral("modes")) {
+    if (m_output && m_output->isValid()) {
+      m_modes = m_output->modes();
+      Q_EMIT modesChanged();
+    }
+  } else if (property == QStringLiteral("x") || property == QStringLiteral("y") || 
+             property == QStringLiteral("width") || property == QStringLiteral("height")) {
+    // Recompute geometry when position or size changes
+    if (m_output && m_output->isValid()) {
+      m_geometry = QRect(m_output->x(), m_output->y(), m_output->width(), m_output->height());
+      Q_EMIT geometryChanged();
+    }
   }
 }
 
@@ -31,7 +40,20 @@ void Output::init(QSharedPointer<QDBusConnection> connection) {
 
   m_output = QSharedPointer<org::buddiesofbudgie::Services::Output>(output);
 
+  // Initialize properties from current D-Bus values
+  if (m_output->isValid()) {
+    m_geometry = QRect(m_output->x(), m_output->y(), m_output->width(), m_output->height());
+    m_name = m_output->name();
+    m_modes = m_output->modes();
+  }
+
   connect(m_output.data(), &org::buddiesofbudgie::Services::Output::PropertyChanged, this, &Output::onPropertyChanged);
+  connect(m_output.data(), &org::buddiesofbudgie::Services::Output::PositionChanged, this, [this](int x, int y) {
+    if (m_output && m_output->isValid()) {
+      m_geometry = QRect(x, y, m_output->width(), m_output->height());
+      Q_EMIT geometryChanged();
+    }
+  });
 }
 
 QRect Output::geometry() const {
@@ -45,4 +67,8 @@ QString Output::name() const {
 
 QString Output::serial() const {
   return m_output->isValid() ? m_output->serial() : QString();
+}
+
+bd::Outputs::OutputModesMap Output::modes() const {
+  return m_output->isValid() ? m_output->modes() : bd::Outputs::OutputModesMap();
 }
